@@ -38,8 +38,8 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1 
         with:
-         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }} 
-         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }} 
+         aws-access-key-id: ${{ secrets.KAINOS_AWS_ACCESS_KEY_ID }} 
+         aws-secret-access-key: ${{ secrets.KAINOS_AWS_SECRET_ACCESS_KEY }} 
          aws-region: eu-west-1
         
       - name: Login to Amazon ECR
@@ -55,10 +55,6 @@ jobs:
          ECR_REPOSITORY: employee_demo
          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
          IMAGE_TAG: team1-api
-        run:
-         docker build --build-arg DB_PASSWORD=${DB_PASSWORD} 
-         --build-arg DB_USERNAME=${DB_USERNAME} 
-         --build-arg DB_HOST=${DB_HOST} 
-         --build-arg DB_NAME=${DB_NAME} 
-         -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .          
-          docker push ${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG}
+        run:|
+         docker build --build-arg DB_PASSWORD=${DB_PASSWORD} --build-arg DB_USERNAME=${DB_USERNAME} --build-arg DB_HOST=${DB_HOST} --build-arg DB_NAME=${DB_NAME} -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .          
+         docker push ${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG}
